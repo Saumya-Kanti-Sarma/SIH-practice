@@ -6,6 +6,10 @@
   --red: #F83D3D;
   --dark-green: #168948;
   --off-white: #F1F1F1;
+  --yellow: #E0B000;
+  --orange: #E67E22;
+  --maroon: #800000;
+  --gray: #808080;
 }
 
 * {
@@ -19,4 +23,11 @@ body {
   overflow: hidden;
   height: 100vdh;
   width: 100vw;
+}
+
+.App-main {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  justify-content: start;
 }

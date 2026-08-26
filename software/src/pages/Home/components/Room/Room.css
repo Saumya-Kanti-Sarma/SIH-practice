@@ -1,0 +1,70 @@
+.room {
+  align-items: center;
+  background-color: color-mix(in srgb, var(--room-status-color) 10%, var(--white));
+  border: 1px solid var(--room-status-color);
+  border-radius: 16px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 64px 1fr;
+  min-height: 104px;
+  padding: 14px 16px;
+  width: min(100%, 180px);
+}
+
+.room__icon-wrap {
+  align-items: center;
+  background-color: color-mix(in srgb, var(--room-status-color) 16%, var(--white));
+  border-radius: 50%;
+  color: var(--room-status-color);
+  display: flex;
+  grid-row: span 2;
+  height: 64px;
+  justify-content: center;
+  width: 64px;
+}
+
+.room__icon {
+  font-size: 32px;
+  stroke-width: 1.5;
+}
+
+.room__number {
+  color: var(--room-status-color);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.room__status {
+  background-color: color-mix(in srgb, var(--room-status-color) 16%, var(--white));
+  border-radius: 14px;
+  color: var(--room-status-color);
+  font-size: 12px;
+  justify-self: start;
+  line-height: 1;
+  padding: 9px 12px;
+  white-space: nowrap;
+}
+
+.room--ready {
+  --room-status-color: var(--green);
+}
+
+.room--empty {
+  --room-status-color: var(--red);
+}
+
+.room--cleaning {
+  --room-status-color: var(--yellow);
+}
+
+.room--inspection {
+  --room-status-color: var(--orange);
+}
+
+.room--maintainance {
+  --room-status-color: var(--maroon);
+}
+
+.room--booked {
+  --room-status-color: var(--gray);
+}
