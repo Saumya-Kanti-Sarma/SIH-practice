@@ -1,0 +1,148 @@
+.sidebar {
+  background: linear-gradient(160deg, var(--dark-green), var(--green));
+  /* border-radius: 0 12px 12px 0; */
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 56px);
+  justify-content: space-between;
+  max-width: 278px;
+  overflow: hidden;
+  padding: 28px 16px;
+  width: 100%;
+}
+
+.sidebar__brand {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  margin: 0 12px 38px;
+}
+
+.sidebar__brand-mark {
+  align-items: center;
+  background: var(--white);
+  border-radius: 8px;
+  color: var(--dark-green);
+  display: flex;
+  font-size: 12px;
+  font-weight: 800;
+  height: 30px;
+  justify-content: center;
+  letter-spacing: 0;
+  width: 30px;
+}
+
+.sidebar__brand-name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.sidebar__nav-group {
+  display: grid;
+  gap: 8px;
+}
+
+.sidebar__link,
+.sidebar__logout {
+  align-items: center;
+  border-radius: 8px;
+  color: var(--white);
+  display: flex;
+  font-size: 14px;
+  gap: 15px;
+  min-height: 42px;
+  padding: 0 14px;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.sidebar__link:hover,
+.sidebar__link:focus-visible,
+.sidebar__logout:hover,
+.sidebar__logout:focus-visible {
+  background-color: var(--dark-green);
+  outline: none;
+}
+
+.sidebar__link--active {
+  background-color: var(--dark-green);
+  font-weight: 700;
+}
+
+.sidebar__icon {
+  flex: 0 0 auto;
+  font-size: 20px;
+  stroke-width: 1.7;
+}
+
+.sidebar__divider {
+  background-color: var(--dark-green);
+  height: 1px;
+  margin: 26px 7px 18px;
+}
+
+.sidebar__account {
+  background-color: var(--dark-green);
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sidebar__profile {
+  align-items: center;
+  display: flex;
+  gap: 11px;
+  min-height: 67px;
+  padding: 0 13px;
+}
+
+.sidebar__avatar {
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 50%;
+  color: var(--dark-green);
+  display: flex;
+  flex: 0 0 auto;
+  font-size: 16px;
+  font-weight: 800;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.sidebar__profile-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sidebar__profile-copy strong {
+  font-size: 13px;
+}
+
+.sidebar__profile-copy span {
+  color: var(--off-white);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.sidebar__chevron {
+  font-size: 16px;
+  margin-left: auto;
+}
+
+.sidebar__logout {
+  border-radius: 0;
+  border-top: 1px solid var(--green);
+  min-height: 46px;
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    border-radius: 0;
+    max-width: none;
+    min-height: 100vh;
+  }
+}

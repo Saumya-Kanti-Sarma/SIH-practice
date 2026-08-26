@@ -14,3 +14,9 @@
   padding: 0;
   border-radius: 0;
 }
+
+body {
+  overflow: hidden;
+  height: 100vdh;
+  width: 100vw;
+}
