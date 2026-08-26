@@ -15,9 +15,7 @@ const primaryItems = [
   { label: "All Rooms", icon: FiGrid, active: true },
   { label: "Empty Rooms", icon: FiClipboard },
   { label: "Occupied Rooms", icon: FiUser },
-  { label: "Tasks", icon: FiClipboard, v2: true },
-  { label: "Maintenance", icon: FiTool, v2: true },
-  { label: "Reports", icon: FiBarChart2, v2: true },
+  { label: "Under Maintenance", icon: FiTool, v2: true },
 ];
 
 const secondaryItems = [
@@ -39,7 +37,7 @@ const Sidebar = () => {
             {primaryItems.map(({ label, icon: Icon, active }) => (
               <a
                 className={`sidebar__link${active ? " sidebar__link--active" : ""}`}
-                href={`#${label.toLowerCase().replaceAll(" ", "-")}`}
+                href={`/${label.toLowerCase().replaceAll(" ", "-")}`}
                 key={label}
               >
                 <Icon aria-hidden="true" className="sidebar__icon" />
@@ -54,7 +52,7 @@ const Sidebar = () => {
             {secondaryItems.map(({ label, icon: Icon }) => (
               <a
                 className="sidebar__link"
-                href={`#${label.toLowerCase()}`}
+                href={`/${label.toLowerCase()}`}
                 key={label}
               >
                 <Icon aria-hidden="true" className="sidebar__icon" />
