@@ -1,6 +1,7 @@
 import {
-  FiBarChart2,
   FiChevronDown,
+  FiChevronLeft,
+  FiChevronRight,
   FiClipboard,
   FiGrid,
   FiLogOut,
@@ -23,13 +24,21 @@ const secondaryItems = [
   { label: "Settings", icon: FiSettings, v2: true },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ collapsed, onToggle }) => {
   return (
-    <aside className="sidebar" aria-label="Main navigation">
+    <aside className={`sidebar ${collapsed ? "sidebar--collapsed" : ""}`} aria-label="Main navigation">
       <div className="sidebar__content">
         <div className="sidebar__brand">
-          <span className="sidebar__brand-mark">HT</span>
-          <span className="sidebar__brand-name">Hotel Turnaround</span>
+          {!collapsed && <span className="sidebar__brand-mark">HT</span>}
+          {!collapsed && <span className="sidebar__brand-name">Hotel Turnaround</span>}
+          <button
+            type="button"
+            className="sidebar__collapse-toggle"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            onClick={onToggle}
+          >
+            {collapsed ? <FiChevronRight aria-hidden="true" /> : <FiChevronLeft aria-hidden="true" />}
+          </button>
         </div>
 
         <nav className="sidebar__nav">
@@ -39,9 +48,10 @@ const Sidebar = () => {
                 className={`sidebar__link${active ? " sidebar__link--active" : ""}`}
                 href={`/${label.toLowerCase().replaceAll(" ", "-")}`}
                 key={label}
+                title={collapsed ? label : undefined}
               >
                 <Icon aria-hidden="true" className="sidebar__icon" />
-                <span>{label}</span>
+                {!collapsed && <span className="sidebar__link-label">{label}</span>}
               </a>
             ))}
           </div>
@@ -54,9 +64,10 @@ const Sidebar = () => {
                 className="sidebar__link"
                 href={`/${label.toLowerCase()}`}
                 key={label}
+                title={collapsed ? label : undefined}
               >
                 <Icon aria-hidden="true" className="sidebar__icon" />
-                <span>{label}</span>
+                {!collapsed && <span className="sidebar__link-label">{label}</span>}
               </a>
             ))}
           </div>
@@ -64,18 +75,22 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar__account">
-        <div className="sidebar__profile">
-          <div aria-hidden="true" className="sidebar__avatar">S</div>
-          <div className="sidebar__profile-copy">
-            <strong>Saumya</strong>
-            <span>Housekeeping Staff</span>
+        {!collapsed && (
+          <div className="sidebar__profile">
+            <div aria-hidden="true" className="sidebar__avatar">S</div>
+            <div className="sidebar__profile-copy">
+              <strong>Saumya</strong>
+              <span>Housekeeping Staff</span>
+            </div>
+            <FiChevronDown className="sidebar__chevron" />
           </div>
-          <FiChevronDown aria-hidden="true" className="sidebar__chevron" />
-        </div>
-        <a className="sidebar__logout" href="#log-out">
-          <FiLogOut aria-hidden="true" className="sidebar__icon" />
-          <span>Log out</span>
-        </a>
+        )}
+        {!collapsed && (
+          <a className="sidebar__logout" href="#log-out">
+            <FiLogOut className="sidebar__icon" />
+            <span className="sidebar__logout-label">Log out</span>
+          </a>
+        )}
       </div>
     </aside>
   );

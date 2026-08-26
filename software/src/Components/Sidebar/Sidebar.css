@@ -1,6 +1,5 @@
 .sidebar {
   background: linear-gradient(160deg, var(--dark-green), var(--green));
-  /* border-radius: 0 12px 12px 0; */
   color: var(--white);
   display: flex;
   flex-direction: column;
@@ -9,7 +8,22 @@
   max-width: 278px;
   overflow: hidden;
   padding: 28px 16px;
+  transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
   width: 100%;
+  will-change: width, max-width, padding;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.sidebar--collapsed {
+  padding-inline: 10px;
+  width: 52px;
+}
+
+.sidebar__content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .sidebar__brand {
@@ -17,6 +31,12 @@
   display: flex;
   gap: 12px;
   margin: 0 12px 38px;
+  min-width: 0;
+}
+
+.sidebar--collapsed .sidebar__brand {
+  justify-content: center;
+  margin-inline: 0;
 }
 
 .sidebar__brand-mark {
@@ -31,12 +51,50 @@
   justify-content: center;
   letter-spacing: 0;
   width: 30px;
+  flex-shrink: 0;
+}
+
+.sidebar__brand-name,
+.sidebar__link-label,
+.sidebar__profile-copy,
+.sidebar__logout-label {
+  transition: opacity 0.12s ease, width 0.12s ease, transform 0.12s ease;
 }
 
 .sidebar__brand-name {
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.sidebar--collapsed .sidebar__brand-name,
+.sidebar--collapsed .sidebar__link-label,
+.sidebar--collapsed .sidebar__profile-copy,
+.sidebar--collapsed .sidebar__logout-label,
+.sidebar--collapsed .sidebar__chevron {
+  opacity: 0;
+  transform: translateX(-8px);
+  width: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sidebar__collapse-toggle {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  color: var(--white);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  height: 28px;
+  justify-content: center;
+  /* margin-left: auto; */
+  width: 28px;
+  flex-shrink: 0;
 }
 
 .sidebar__nav-group {
@@ -52,10 +110,17 @@
   display: flex;
   font-size: 14px;
   gap: 15px;
+  justify-content: flex-start;
   min-height: 42px;
   padding: 0 14px;
   text-decoration: none;
   transition: background-color 160ms ease, color 160ms ease;
+}
+
+.sidebar--collapsed .sidebar__link,
+.sidebar--collapsed .sidebar__logout {
+  justify-content: center;
+  padding-inline: 0;
 }
 
 .sidebar__link:hover,
@@ -69,6 +134,12 @@
 .sidebar__link--active {
   background-color: var(--dark-green);
   font-weight: 700;
+}
+
+.sidebar__link-label,
+.sidebar__logout-label {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .sidebar__icon {
@@ -98,6 +169,11 @@
   padding: 0 13px;
 }
 
+.sidebar--collapsed .sidebar__profile {
+  justify-content: center;
+  padding: 0;
+}
+
 .sidebar__avatar {
   align-items: center;
   background-color: var(--white);
@@ -116,6 +192,7 @@
   display: grid;
   gap: 4px;
   min-width: 0;
+  white-space: nowrap;
 }
 
 .sidebar__profile-copy strong {
@@ -131,6 +208,7 @@
 .sidebar__chevron {
   font-size: 16px;
   margin-left: auto;
+  transition: opacity 0.12s ease, transform 0.12s ease, width 0.12s ease;
 }
 
 .sidebar__logout {
