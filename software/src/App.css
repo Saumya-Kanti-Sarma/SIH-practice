@@ -1,0 +1,16 @@
+:root {
+  --white: #FFFFFE;
+  --green: #12AF56;
+  --black: #000000;
+  --light-gray: #D9D9D9;
+  --red: #F83D3D;
+  --dark-green: #168948;
+  --off-white: #F1F1F1;
+}
+
+* {
+  font-family: inter;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
