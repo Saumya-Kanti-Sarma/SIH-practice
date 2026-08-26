@@ -19,6 +19,24 @@
   border-radius: 0;
 }
 
+*::-webkit-scrollbar {
+  scrollbar-width: 20px;
+  scrollbar-color: var(--green) var(--black);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--off-white);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--green);
+  border: 2px solid var(--off-white);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-green);
+}
+
 body {
   overflow: hidden;
   height: 100vdh;
