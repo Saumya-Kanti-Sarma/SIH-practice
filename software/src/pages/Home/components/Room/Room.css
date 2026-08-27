@@ -12,6 +12,15 @@
   position: relative;
   width: calc(100px - 24px);
   margin-bottom: 20px;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.room:hover,
+.room:focus-visible {
+  box-shadow: 0 12px 24px rgba(24, 42, 35, 0.12);
+  outline: none;
+  transform: translateY(-2px);
 }
 
 .room__icon-wrap {

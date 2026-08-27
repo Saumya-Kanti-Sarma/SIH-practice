@@ -2,6 +2,7 @@ import { LuDoorOpen } from "react-icons/lu";
 import { GiVacuumCleaner } from "react-icons/gi";
 import { GiAutoRepair } from "react-icons/gi";
 import { IoSearchSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 import "./Room.css";
 
@@ -49,16 +50,17 @@ const Room = ({ roomNo, status = "available" }) => {
   const statusLabel = statusLabels[resolvedStatus] ?? "Unknown";
 
   return (
-    <article
+    <Link
       aria-label={`Room ${roomNo}, ${statusLabel}`}
       className={`room room--${resolvedStatus}`}
+      to={`/room/${roomNo}`}
     >
       <div className="room__icon-wrap">
         <RoomIcon status={resolvedStatus} />
       </div>
       <strong className="room__number">{roomNo}</strong>
       <span className="room__status">{statusLabel}</span>
-    </article>
+    </Link>
   );
 };
 
