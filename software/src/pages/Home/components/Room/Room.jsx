@@ -6,40 +6,55 @@ import { IoSearchSharp } from "react-icons/io5";
 import "./Room.css";
 
 const statusLabels = {
-  ready: "Ready",
+  available: "Available",
+  occupied: "Occupied",
   empty: "Empty",
   cleaning: "Cleaning",
   inspection: "Inspection",
-  maintainance: "Maintainance",
+  maintenance: "Maintenance",
   booked: "Booked",
+  ready: "Available",
+  maintainance: "Maintenance",
 };
 
 function RoomIcon({ status }) {
-  if (status == "cleaning") {
-    return <GiVacuumCleaner aria-hidden="true" className="room__icon" />
+  const normalizedStatus = String(status || "").trim().toLowerCase();
+
+  if (normalizedStatus === "cleaning") {
+    return <GiVacuumCleaner aria-hidden="true" className="room__icon" />;
   }
-  else if (status == "inspection") {
-    return <IoSearchSharp aria-hidden="true" className="room__icon" />
+
+  if (normalizedStatus === "inspection") {
+    return <IoSearchSharp aria-hidden="true" className="room__icon" />;
   }
-  else if (status == "maintainance") {
-    return <GiAutoRepair aria-hidden="true" className="room__icon" />
+
+  if (["maintenance", "maintainance"].includes(normalizedStatus)) {
+    return <GiAutoRepair aria-hidden="true" className="room__icon" />;
   }
-  else {
-    return <LuDoorOpen aria-hidden="true" className="room__icon" />
-  }
+
+  return <LuDoorOpen aria-hidden="true" className="room__icon" />;
 }
-// status = [ready, empty, cleaning, inspection, maintainance, booked]
-const Room = ({ roomNo, status = "ready" }) => {
+
+const Room = ({ roomNo, status = "available" }) => {
   const normalizedStatus = String(status).trim().toLowerCase();
-  const statusLabel = statusLabels[normalizedStatus] ?? "Unknown";
+  const resolvedStatus =
+    normalizedStatus === "ready"
+      ? "available"
+      : normalizedStatus === "maintainance"
+        ? "maintenance"
+        : normalizedStatus === "checkout"
+          ? "available"
+          : normalizedStatus;
+
+  const statusLabel = statusLabels[resolvedStatus] ?? "Unknown";
 
   return (
     <article
       aria-label={`Room ${roomNo}, ${statusLabel}`}
-      className={`room room--${normalizedStatus}`}
+      className={`room room--${resolvedStatus}`}
     >
       <div className="room__icon-wrap">
-        <RoomIcon status={status} />
+        <RoomIcon status={resolvedStatus} />
       </div>
       <strong className="room__number">{roomNo}</strong>
       <span className="room__status">{statusLabel}</span>

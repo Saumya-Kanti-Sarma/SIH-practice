@@ -11,13 +11,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="all-rooms" element={<Home />} />
-          <Route path="empty-rooms" element={<h1>Empty rooms </h1>} />
-          <Route path="occupied-rooms" element={<h1>Occupied rooms </h1>} />
-          <Route path="under-maintenance" element={<h1>Under maintainance </h1>} />
+          <Route path="rooms" element={<Home />} />
           {/* Add more routes that need the sidebar */}
-          {/* <Route path="about" element={<About />} /> */}
-          {/* <Route path="contact" element={<Contact />} /> */}
+          <Route path="employees" element={<h1>Employee Page</h1>} />
+          <Route path="settings" element={<h1>Settings Page</h1>} />
         </Route>
       </Routes>
     </BrowserRouter>

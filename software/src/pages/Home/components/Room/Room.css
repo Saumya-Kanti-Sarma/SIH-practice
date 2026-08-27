@@ -1,70 +1,94 @@
 .room {
   align-items: center;
-  background-color: color-mix(in srgb, var(--room-status-color) 10%, var(--white));
-  border: 1px solid var(--room-status-color);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(26, 115, 91, 0.18);
   border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(24, 42, 35, 0.04);
   display: grid;
-  gap: 12px;
-  grid-template-columns: 64px 1fr;
-  min-height: 104px;
-  padding: 14px 16px;
-  width: min(100%, 180px);
+  gap: 8px;
+  justify-items: center;
+  height: calc(100px - 28px);
+  padding: 14px 12px;
+  position: relative;
+  width: calc(100px - 24px);
+  margin-bottom: 20px;
 }
 
 .room__icon-wrap {
   align-items: center;
-  background-color: color-mix(in srgb, var(--room-status-color) 16%, var(--white));
-  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--room-status-color) 16%, white);
+  border-radius: 10px;
   color: var(--room-status-color);
   display: flex;
-  grid-row: span 2;
-  height: 64px;
+  height: 32px;
   justify-content: center;
-  width: 64px;
+  width: 32px;
 }
 
 .room__icon {
-  font-size: 32px;
-  stroke-width: 1.5;
+  font-size: 18px;
+  stroke-width: 2;
 }
 
 .room__number {
   color: var(--room-status-color);
-  font-size: 28px;
+  font-size: clamp(1.5rem, 1.2vw + 1rem, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
 .room__status {
-  background-color: color-mix(in srgb, var(--room-status-color) 16%, var(--white));
-  border-radius: 14px;
+  background-color: color-mix(in srgb, var(--room-status-color) 12%, white);
+  border-radius: 8px;
   color: var(--room-status-color);
-  font-size: 12px;
-  justify-self: start;
+  font-size: 0.67rem;
+  font-weight: 700;
   line-height: 1;
-  padding: 9px 12px;
+  padding: 7px 9px;
+  text-align: center;
   white-space: nowrap;
 }
 
+.room--available,
 .room--ready {
-  --room-status-color: var(--green);
+  --room-status-color: #1ca465;
+  background: rgba(214, 243, 221, 0.95);
+  border-color: rgba(28, 164, 101, 0.28);
+}
+
+.room--occupied {
+  --room-status-color: #2d7ce8;
+  background: rgba(214, 231, 255, 0.95);
+  border-color: rgba(45, 124, 232, 0.28);
 }
 
 .room--empty {
-  --room-status-color: var(--red);
+  --room-status-color: #d95e5e;
+  background: rgba(255, 234, 234, 0.95);
+  border-color: rgba(217, 94, 94, 0.3);
 }
 
 .room--cleaning {
-  --room-status-color: var(--yellow);
+  --room-status-color: #d8a000;
+  background: rgba(255, 243, 196, 0.95);
+  border-color: rgba(216, 160, 0, 0.28);
 }
 
 .room--inspection {
-  --room-status-color: var(--orange);
+  --room-status-color: #d8892d;
+  background: rgba(255, 235, 205, 0.92);
+  border-color: rgba(216, 137, 45, 0.26);
 }
 
-.room--maintainance {
-  --room-status-color: var(--maroon);
+.room--maintenance {
+  --room-status-color: #b14343;
+  background: rgba(244, 216, 216, 0.95);
+  border-color: rgba(177, 67, 67, 0.26);
 }
 
 .room--booked {
-  --room-status-color: var(--gray);
+  --room-status-color: #7d8b8d;
+  background: rgba(226, 232, 233, 0.95);
+  border-color: rgba(125, 139, 141, 0.22);
 }
