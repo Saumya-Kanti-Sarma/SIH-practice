@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useWorker } from '@/components/worker-context';
@@ -14,9 +15,48 @@ type TaskState = 'pending' | 'passed' | 'failed';
 
 export default function HomeScreen() {
   const [taskState, setTaskState] = useState<TaskState>('pending');
+  const [videoUri, setVideoUri] = useState<string | null>(null);
+  const [videoName, setVideoName] = useState<string>('');
+  const [submissionMessage, setSubmissionMessage] = useState<string>('');
   const { selectedWorker } = useWorker();
   const isInspection = selectedWorker.task === 'Inspection';
-  const taskColor = isInspection ? '#800000' : '#14b96a';
+  const requiresVideoUpload = ['Inspection', 'Cleaning', 'Maintenance'].includes(selectedWorker.task);
+  const taskColor = isInspection ? '#800000' : selectedWorker.task === 'Cleaning' ? '#14b96a' : selectedWorker.task === 'Maintenance' ? '#c95454' : '#7c4dff';
+
+  const handleVideoUpload = async () => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.status !== 'granted') {
+      setSubmissionMessage('Camera access is required to record the room video.');
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Video,
+      quality: 0.8,
+      videoMaxDuration: 60,
+      allowsEditing: false,
+    });
+
+    if (result.canceled || !result.assets?.length) {
+      return;
+    }
+
+    const recordedVideo = result.assets[0];
+    setVideoUri(recordedVideo.uri);
+    setVideoName(recordedVideo.fileName || 'room-video.mp4');
+    setSubmissionMessage('Video recorded and ready for review.');
+  };
+
+  const handleSubmit = (nextState: TaskState) => {
+    if (requiresVideoUpload && !videoUri) {
+      setSubmissionMessage('Upload a room video before turning in this work.');
+      return;
+    }
+
+    setTaskState(nextState);
+    setSubmissionMessage(`Task marked ${nextState}.`);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -72,14 +112,47 @@ export default function HomeScreen() {
           ))}
         </View>
 
+        {requiresVideoUpload && (
+          <View style={styles.uploadCard}>
+            <View style={styles.uploadHeader}>
+              <MaterialIcons name="videocam" size={22} color="#5b53ff" />
+              <Text style={styles.uploadTitle}>Room video required</Text>
+            </View>
+            <Text style={styles.uploadHint}>Record a short room video before turning in this {selectedWorker.task.toLowerCase()} work.</Text>
+            <Pressable style={styles.uploadButton} onPress={handleVideoUpload}>
+              <MaterialIcons name="videocam" size={18} color="#fff" />
+              <Text style={styles.uploadButtonText}>{videoUri ? 'Record again' : 'Record video'}</Text>
+            </Pressable>
+            {videoName ? <Text style={styles.uploadFileName}>Selected: {videoName}</Text> : <Text style={styles.uploadFileName}>No video uploaded yet</Text>}
+          </View>
+        )}
+
         <View style={styles.actions}>
-          <Pressable style={[styles.actionButton, styles.passButton, taskState === 'passed' && styles.selectedButton]} onPress={() => setTaskState('passed')}>
+          <Pressable
+            style={[
+              styles.actionButton,
+              styles.passButton,
+              (taskState === 'passed' || (!videoUri && requiresVideoUpload)) && styles.selectedButton,
+              !videoUri && requiresVideoUpload && styles.disabledButton,
+            ]}
+            onPress={() => handleSubmit('passed')}
+            disabled={!videoUri && requiresVideoUpload}
+          >
             <MaterialIcons name="check-circle" size={22} color="#fff" /><Text style={styles.actionText}>Pass</Text>
           </Pressable>
-          <Pressable style={[styles.actionButton, styles.failButton, taskState === 'failed' && styles.selectedButton]} onPress={() => setTaskState('failed')}>
+          <Pressable
+            style={[
+              styles.actionButton,
+              styles.failButton,
+              (taskState === 'failed' || (!videoUri && requiresVideoUpload)) && styles.selectedButton,
+              !videoUri && requiresVideoUpload && styles.disabledButton,
+            ]}
+            onPress={() => handleSubmit('failed')}
+            disabled={!videoUri && requiresVideoUpload}
+          >
             <MaterialIcons name="cancel" size={22} color="#fff" /><Text style={styles.actionText}>Failed</Text>
           </Pressable>
-          {taskState !== 'pending' && <Text style={styles.resultText}>Task marked {taskState}.</Text>}
+          {submissionMessage ? <Text style={styles.resultText}>{submissionMessage}</Text> : null}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -126,11 +199,19 @@ const styles = StyleSheet.create({
   rowValue: { color: '#86919c', fontSize: 9 },
   countBadge: { alignItems: 'center', backgroundColor: '#fff2d8', borderRadius: 13, height: 25, justifyContent: 'center', width: 25 },
   countText: { color: '#efa436', fontSize: 11, fontWeight: '800' },
+  uploadCard: { backgroundColor: '#f6f3ff', borderColor: '#ddd5ff', borderRadius: 14, borderWidth: 1, marginTop: 16, padding: 14 },
+  uploadHeader: { alignItems: 'center', flexDirection: 'row', gap: 8 },
+  uploadTitle: { color: '#3c2c8c', fontSize: 12, fontWeight: '800' },
+  uploadHint: { color: '#655c88', fontSize: 11, marginTop: 8, lineHeight: 18 },
+  uploadButton: { alignItems: 'center', backgroundColor: '#5b53ff', borderRadius: 10, flexDirection: 'row', gap: 8, justifyContent: 'center', marginTop: 12, paddingHorizontal: 12, paddingVertical: 10 },
+  uploadButtonText: { color: '#fff', fontSize: 12, fontWeight: '800' },
+  uploadFileName: { color: '#4a5565', fontSize: 11, marginTop: 10 },
   actions: { gap: 8, marginTop: 14 },
   actionButton: { alignItems: 'center', borderRadius: 10, flexDirection: 'row', gap: 8, height: 40, justifyContent: 'center', paddingHorizontal: 13 },
   passButton: { backgroundColor: '#14b96a' },
   failButton: { backgroundColor: '#fa4248' },
   selectedButton: { shadowColor: '#20354b', shadowOpacity: 0.25, shadowRadius: 8, elevation: 4 },
+  disabledButton: { opacity: 0.6 },
   actionText: { color: '#fff', fontSize: 13, fontWeight: '800', textAlign: 'center' },
   resultText: { color: '#6f7c8a', fontSize: 11, textAlign: 'center' },
 });

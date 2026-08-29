@@ -1,8 +1,18 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import Room from "./components/Room/Room.jsx";
 import roomData from "./data.js";
 import "./Home.css";
+
+const statusLegend = [
+  { key: "available", label: "Available", color: "#1ca465" },
+  { key: "occupied", label: "Occupied", color: "#2d7ce8" },
+  { key: "empty", label: "Empty", color: "#d95e5e" },
+  { key: "cleaning", label: "Cleaning", color: "#d8a000" },
+  { key: "inspection", label: "Inspection", color: "#d8892d" },
+  { key: "maintenance", label: "Maintenance", color: "#b14343" },
+  { key: "booked", label: "Booked", color: "#7d8b8d" },
+];
 
 const filters = [
   { key: "all", label: "All" },
@@ -32,6 +42,35 @@ const normalizeStatus = (status) => {
 const Home = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchText, setSearchText] = useState("");
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setNow(new Date());
+    }, 60000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const currentDateText = useMemo(
+    () =>
+      new Intl.DateTimeFormat("en-US", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }).format(now),
+    [now]
+  );
+
+  const currentTimeText = useMemo(
+    () =>
+      new Intl.DateTimeFormat("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+      }).format(now),
+    [now]
+  );
 
   const allRooms = useMemo(
     () => Object.values(roomData).flat().sort((a, b) => a.roomNo - b.roomNo),
@@ -70,9 +109,22 @@ const Home = () => {
   return (
     <main className="home-page">
       <header className="topbar">
+        <section className="status-legend" aria-label="Room status legend">
+          {statusLegend.map((status) => (
+            <div className="status-legend__item" key={status.key}>
+              <span
+                className="status-legend__swatch"
+                style={{ backgroundColor: status.color }}
+                aria-hidden="true"
+              />
+              <span className="status-legend__label">{status.label}</span>
+            </div>
+          ))}
+        </section>
         <div className="topbar__meta">
-          <p className="topbar__date">Sat, 24 May 2025</p>
-          <p className="topbar__time">10:30 AM</p>
+          <p className="topbar__date">{currentDateText}</p>
+          <span className="topbar__divider" aria-hidden="true" />
+          <p className="topbar__time">{currentTimeText}</p>
         </div>
       </header>
 

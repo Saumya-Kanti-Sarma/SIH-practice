@@ -29,6 +29,13 @@
   margin: 0;
 }
 
+.topbar__divider {
+  background: transparent;
+  display: inline-block;
+  height: 14px;
+  width: 1px;
+}
+
 .home-header {
   align-items: center;
   display: flex;
@@ -212,6 +219,41 @@
 .stat-card--empty .stat-card__icon-wrap {
   background: rgba(94, 124, 161, 0.12);
   color: #4f718d;
+}
+
+.status-legend {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  border: none;
+  border-radius: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.status-legend__item {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 20%;
+  display: inline-flex;
+  gap: 8px;
+  padding: 7px 10px;
+}
+
+.status-legend__swatch {
+  border-radius: 50%;
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+}
+
+.status-legend__label {
+  color: #35504d;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .room-filter-bar {

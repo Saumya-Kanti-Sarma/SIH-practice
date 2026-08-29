@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const tasks = [
   { room: '404', type: 'Inspection', time: '11:00 AM', priority: 'High', color: '#f2b25e', icon: 'fact-check' },
   { room: '203', type: 'Cleaning', time: '01:30 PM', priority: 'Medium', color: '#63cda0', icon: 'cleaning-services' },
-  { room: '601', type: 'Room preparation', time: '03:00 PM', priority: 'Low', color: '#6ca7df', icon: 'bed' },
+  { room: '818', type: 'Maintenance', time: '02:30 PM', priority: 'High', color: '#c95454', icon: 'build' },
 ];
 
 export default function MyTaskScreen() {

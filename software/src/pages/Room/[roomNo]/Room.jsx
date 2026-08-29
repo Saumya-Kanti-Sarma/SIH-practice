@@ -166,9 +166,9 @@ const RoomDetails = () => {
             <DetailItem label="Check-out" value={room.customer.checkout_time} icon={FiClock} />
             <DetailItem label="Check-in" value={room.customer.checkin_time} icon={FiCalendar} />
             <DetailItem label="Booking Status" value={room.status === "booked" ? "Booked" : "No Future Booking"} icon={FiInfo} />
-            {status === "booked" && <DetailItem label="Priority Score" value={room.priorityScore ?? "Not assigned"} icon={LuWrench} />}
+            {status !== "booked" && status !== "occupied" && <DetailItem label="Priority Score" value={room.priorityScore ?? "Not assigned"} icon={LuWrench} />}
           </div>
-          <RoomCountdown targetTime={status === "booked" ? room.customer.checkin_time : room.customer.checkout_time} label={status === "booked" ? "Time until next guest arrives" : "Time until room is empty"} />
+          <RoomCountdown targetTime={status === "booked" ? room.customer.checkin_time : room.customer.checkout_time} label={status === "booked" && status == "Time until room is empty" ? "Time until next guest arrives" : "Time until room is empty"} />
         </section>
       }
 

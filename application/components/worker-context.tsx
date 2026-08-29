@@ -2,7 +2,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 
 export type Worker = {
   name: string;
-  task: 'Inspection' | 'Cleaning';
+  task: 'Inspection' | 'Cleaning' | 'Maintenance';
   roomNo: number;
   guestArriving: string;
   priorityScore: number;
@@ -22,6 +22,13 @@ export const workers: Worker[] = [
     roomNo: 522,
     guestArriving: '9:00 AM',
     priorityScore: 25,
+  },
+  {
+    name: 'Aman Verma',
+    task: 'Maintenance',
+    roomNo: 818,
+    guestArriving: '2:30 PM',
+    priorityScore: 61,
   },
 ];
 
